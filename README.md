@@ -31,6 +31,7 @@
 | 💡 **Syntax Highlighting** | Custom code editor with line numbers and language-aware highlighting |
 | ⚡ **WebGPU Acceleration** | Hardware-accelerated inference — **no cloud required**, just your GPU |
 | 🌐 **Zero Dependencies** | No API keys, no cloud services, no external servers — 100% offline |
+| 🧪 **Comprehensive Testing** | 65+ tests covering components, hooks, utilities, and workers with 75%+ code coverage |
 
 ---
 

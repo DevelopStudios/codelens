@@ -10,7 +10,7 @@ function send(msg: WorkerOutMessage) {
   self.postMessage(msg)
 }
 
-async function init() {
+export async function init() {
   if (!('gpu' in navigator)) {
     send({ type: 'WEBGPU_UNSUPPORTED' })
     return
@@ -35,7 +35,7 @@ async function init() {
   }
 }
 
-async function review(code: string, systemPrompt: string) {
+export async function review(code: string, systemPrompt: string) {
   if (!engine) {
     send({ type: 'REVIEW_ERROR', message: 'Engine not ready.' })
     return
@@ -73,9 +73,14 @@ async function review(code: string, systemPrompt: string) {
   }
 }
 
+// Exported so it can be driven directly in tests without spawning a real
+// Worker. Returns the in-flight promise for INIT/REVIEW so callers can await.
+export function handleMessage(msg: WorkerInMessage): void | Promise<void> {
+  if (msg.type === 'INIT') return init()
+  if (msg.type === 'REVIEW') return review(msg.code, msg.systemPrompt)
+  if (msg.type === 'ABORT') abortController?.abort()
+}
+
 self.addEventListener('message', (e: MessageEvent<WorkerInMessage>) => {
-  const msg = e.data
-  if (msg.type === 'INIT')   void init()
-  if (msg.type === 'REVIEW') void review(msg.code, msg.systemPrompt)
-  if (msg.type === 'ABORT')  abortController?.abort()
+  void handleMessage(e.data)
 })

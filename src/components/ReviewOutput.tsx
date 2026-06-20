@@ -1,9 +1,3 @@
-/**
- * ReviewOutput — streams markdown from the LLM with a blinking cursor.
- *
- * Supports: ## headings, ### subheadings, - bullets, **bold**, `inline code`, paragraphs.
- * Auto-scrolls to bottom while streaming.
- */
 import { useEffect, useRef } from 'react'
 import type { ReviewStatus } from '../types'
 import styles from './ReviewOutput.module.css'
@@ -31,11 +25,11 @@ function renderInline(text: string, key?: string): React.ReactNode {
 type Block =
   | { t: 'h2'; text: string }
   | { t: 'h3'; text: string }
-  | { t: 'p';  text: string }
+  | { t: 'p'; text: string }
   | { t: 'ul'; items: string[] }
 
 function parseBlocks(raw: string): Block[] {
-  const lines  = raw.split('\n')
+  const lines = raw.split('\n')
   const blocks: Block[] = []
   let list: string[] | null = null
 
@@ -44,11 +38,11 @@ function parseBlocks(raw: string): Block[] {
   }
 
   for (const line of lines) {
-    if (line.startsWith('## '))     { flushList(); blocks.push({ t: 'h2', text: line.slice(3) }) }
+    if (line.startsWith('## ')) { flushList(); blocks.push({ t: 'h2', text: line.slice(3) }) }
     else if (line.startsWith('### ')){ flushList(); blocks.push({ t: 'h3', text: line.slice(4) }) }
     else if (line.startsWith('- ')) { (list ??= []).push(line.slice(2)) }
-    else if (line.trim() === '')    { flushList() }
-    else                            { flushList(); blocks.push({ t: 'p',  text: line }) }
+    else if (line.trim() === '') { flushList() }
+    else { flushList(); blocks.push({ t: 'p', text: line }) }
   }
   flushList()
   return blocks
@@ -108,7 +102,7 @@ export function ReviewOutput({ reviewStatus, streamedText, focus, error }: Props
   }, [streamedText, reviewStatus])
 
   const showCursor = reviewStatus === 'reviewing'
-  const isEmpty    = !streamedText && reviewStatus !== 'reviewing'
+  const isEmpty = !streamedText && reviewStatus !== 'reviewing'
 
   const focusLabels: Record<string, string> = {
     general: 'General', performance: 'Performance',

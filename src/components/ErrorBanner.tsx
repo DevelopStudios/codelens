@@ -1,28 +1,29 @@
-import styles from './ErrorBanner.module.css'
+import React from 'react';
 
-interface Props {
-  modelStatus: 'error' | 'unsupported'
-  message: string | null
+interface ErrorBannerProps {
+  error: string | null;
+  networkError: boolean;
 }
 
-export function ErrorBanner({ modelStatus, message }: Props) {
-  if (modelStatus === 'unsupported') {
-    return (
-      <div className={styles.banner} role="alert">
-        <strong>WebGPU not supported</strong>
-        <p>
-          CodeLens requires WebGPU to run the model in-browser. Try Chrome 113+, Edge 113+,
-          or Chrome Canary. Safari and Firefox do not yet support WebGPU by default.
-        </p>
-      </div>
-    )
+const ErrorBanner: React.FC<ErrorBannerProps> = ({ error, networkError }) => {
+  if (!error && !networkError) {
+    return null;
   }
 
   return (
-    <div className={styles.banner} role="alert">
-      <strong>Model failed to load</strong>
-      {message && <p>{message}</p>}
-      <p>Reload the page to try again. If the problem persists, your GPU may not have enough VRAM (need ~2 GB).</p>
+    <div
+      className="error-banner"
+      role="alert"
+      aria-live="assertive"
+      id="error-banner"
+    >
+      {networkError ? (
+        <p>Network error: Please check your connection</p>
+      ) : (
+        <p>{error}</p>
+      )}
     </div>
-  )
-}
+  );
+};
+
+export default ErrorBanner;

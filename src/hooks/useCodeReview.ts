@@ -48,19 +48,19 @@ export interface UseCodeReviewReturn {
 }
 
 export function useCodeReview(code: string, focus: ReviewFocus): UseCodeReviewReturn {
-  const workerRef      = useRef<Worker | null>(null)
-  const timeoutRef     = useRef<ReturnType<typeof setTimeout> | null>(null)
-  const focusRef       = useRef(focus)
-  const codeRef        = useRef(code)
+  const workerRef = useRef<Worker | null>(null)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const focusRef = useRef(focus)
+  const codeRef = useRef(code)
 
   useEffect(() => { focusRef.current = focus }, [focus])
-  useEffect(() => { codeRef.current  = code  }, [code])
+  useEffect(() => { codeRef.current = code }, [code])
 
-  const [modelStatus,   setModelStatus]   = useState<ModelStatus>('checking')
+  const [modelStatus, setModelStatus] = useState<ModelStatus>('checking')
   const [modelProgress, setModelProgress] = useState(0)
-  const [reviewStatus,  setReviewStatus]  = useState<ReviewStatus>('idle')
-  const [streamedText,  setStreamedText]  = useState('')
-  const [error,         setError]         = useState<string | null>(null)
+  const [reviewStatus, setReviewStatus] = useState<ReviewStatus>('idle')
+  const [streamedText, setStreamedText] = useState('')
+  const [error, setError] = useState<string | null>(null)
 
   const clearTimeout_ = useCallback(() => {
     if (timeoutRef.current !== null) {
