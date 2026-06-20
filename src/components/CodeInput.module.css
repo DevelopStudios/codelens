@@ -1,0 +1,181 @@
+.panel {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 50%;
+  min-width: 0;
+  min-height: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+}
+
+@media (max-width: 768px) {
+  .panel {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    flex: 0 0 46%;
+  }
+}
+
+/* panel top bar */
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border-inner);
+  flex: 0 0 auto;
+}
+
+.fileName  { font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); }
+.langBadge { font-size: 11px; color: var(--text-muted); border: 1px solid var(--border); padding: 2px 8px; border-radius: var(--radius); }
+
+/* ─── Editor ──────────────────────────────────────────────────────────────── */
+.editorWrap {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  background: var(--bg);
+  overflow: hidden;
+}
+
+.gutter {
+  flex: 0 0 auto;
+  min-width: 46px;
+  padding: 12px 10px;
+  text-align: right;
+  color: var(--text-ghost);
+  user-select: none;
+  overflow: hidden;
+  background: var(--bg);
+  border-right: 1px solid var(--border-inner);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.lineNum { height: 20px; display: block; }
+
+.codeArea {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* highlighted layer sits below the textarea */
+.highlight {
+  margin: 0;
+  padding: 12px 14px;
+  white-space: pre;
+  overflow: auto;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  color: var(--text);
+  tab-size: 2;
+}
+
+/* transparent textarea on top — captures events, caret visible */
+.textarea {
+  margin: 0;
+  padding: 12px 14px;
+  border: none;
+  outline: none;
+  resize: none;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  color: transparent;
+  caret-color: var(--accent);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 20px;
+  white-space: pre;
+  overflow: auto;
+  tab-size: 2;
+}
+
+.textarea::selection { background: rgba(88, 166, 255, 0.2); }
+
+/* ─── Focus tabs ──────────────────────────────────────────────────────────── */
+.focusSection {
+  padding: 13px 14px 0;
+  flex: 0 0 auto;
+  border-top: 1px solid var(--border-inner);
+}
+
+.focusLabel {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-ghost);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.tabs { display: flex; gap: 6px; }
+
+.tab {
+  flex: 1 1 0;
+  padding: 7px 6px;
+  font-size: 12px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s, background .15s, box-shadow .15s;
+}
+
+.tab:hover:not(:disabled) {
+  color: var(--text-dim);
+  border-color: var(--text-ghost);
+}
+
+.tabActive {
+  color: var(--accent) !important;
+  border-color: var(--accent) !important;
+  background: var(--accent-dim) !important;
+  box-shadow: 0 0 0 1px rgba(88,166,255,.5), 0 0 14px var(--accent-glow);
+}
+
+/* ─── Review button ───────────────────────────────────────────────────────── */
+.buttonWrap { padding: 14px; flex: 0 0 auto; }
+
+.button {
+  width: 100%;
+  padding: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid #2f7bf0;
+  background: #1f6feb;
+  color: #fff;
+  box-shadow: 0 0 0 1px rgba(88,166,255,.15);
+  transition: background .15s, box-shadow .15s, transform .1s;
+}
+
+.button:hover:not(:disabled) {
+  background: #388bfd;
+  box-shadow: 0 0 0 1px rgba(88,166,255,.35), 0 0 12px rgba(88,166,255,.2);
+}
+
+.button:active:not(:disabled) { transform: translateY(1px); }
+
+.button:disabled {
+  background: #21262d;
+  color: var(--text-ghost);
+  border-color: var(--border);
+  cursor: not-allowed;
+  box-shadow: none;
+}

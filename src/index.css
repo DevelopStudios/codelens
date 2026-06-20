@@ -1,0 +1,58 @@
+/* ─── Design tokens ──────────────────────────────────────────────────────── */
+:root {
+  --bg:           #0d1117;
+  --surface:      #161b22;
+  --border:       #30363d;
+  --border-inner: #21262d;
+  --accent:       #58a6ff;
+  --accent-dim:   rgba(88, 166, 255, 0.10);
+  --accent-glow:  rgba(88, 166, 255, 0.28);
+  --text:         #e6edf3;
+  --text-dim:     #c9d1d9;
+  --text-muted:   #7d8590;
+  --text-ghost:   #484f58;
+  --green:        #3fb950;
+  --green-bg:     rgba(63, 185, 80, 0.08);
+  --green-border: rgba(63, 185, 80, 0.4);
+  --amber:        #d29922;
+  --amber-bg:     rgba(210, 153, 34, 0.08);
+  --amber-border: rgba(210, 153, 34, 0.4);
+  --red:          #ff7b72;
+  --font-mono:    'JetBrains Mono', 'Fira Code', monospace;
+  --font-sans:    'Inter', system-ui, -apple-system, sans-serif;
+  --radius:       6px;
+  --header-h:     52px;
+}
+
+/* ─── Reset ──────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body, #root {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
+@keyframes blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── Scrollbars ─────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-ghost); }
